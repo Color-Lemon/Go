@@ -1,29 +1,45 @@
 #include <iostream>
 using namespace std;
 
-void sort(int arr[], int size)
+void sort(int arr[], int i, int j)
 {
-	int tmp = 0;
-	for(int i = 0; i < size; i++)
+	int val = arr[i];
+	int l = i;
+	int r = j;
+	while (l < r)
 	{
-		for(int j = 0; j < size - i - 1; j++)
+		while (l < r && arr[r] >= val)
 		{
-			if(arr[j] > arr[j+1])
-			{
-				tmp = arr[j];
-				arr[j] = arr[j + 1];
-				arr[j+1] = tmp;
-			}
+			r--;
+		}
+		if (l < r)
+		{
+			arr[l++] = arr[r];
+		}
+		while (l < r && arr[l] <= val)
+		{
+			l++;
+		}
+		if (l < r)
+		{
+			arr[r--] = arr[l];
 		}
 	}
-    
+	arr[l] = val;
+	sort(arr, i, l - 1);
+	sort(arr, l + 1, j);
+}
+
+void sort(int arr[], int size)
+{
+	sort(arr, 0, size);
 }
 
 int main()
 {
-    int arr[] = {12, 4, 89, 43, 21, 78};
-    int size = sizeof(arr)/sizeof(arr[0]);
-    sort(arr,size);
+	int arr[] = {12, 4, 89, 43, 21, 78};
+	int size = sizeof(arr) / sizeof(arr[0]);
+	sort(arr, size);
 
-    return 0;
+	return 0;
 }
